@@ -1,7 +1,8 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Desafio1MVCGrupoWASP.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 public class EmpleadosController : Controller
 {
@@ -38,6 +39,7 @@ public class EmpleadosController : Controller
         }
 
         var empleado = await _context.Empleado
+            .Include(e => e.Departamento)
             .FirstOrDefaultAsync(m => m.ID == id);
         if (empleado == null)
         {
@@ -50,6 +52,7 @@ public class EmpleadosController : Controller
     // GET: EMPLEADOS/Create
     public IActionResult Create()
     {
+        ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Id", "Nombre");
         return View();
     }
 
@@ -60,6 +63,7 @@ public class EmpleadosController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("ID,Nombre,FechaNacimiento,FechaContratacion,Salario,Descripcion,DepartamentoId,Departamento")] Empleado empleado)
     {
+        ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Id", "Nombre");
         if (ModelState.IsValid)
         {
             _context.Add(empleado);
@@ -82,6 +86,8 @@ public class EmpleadosController : Controller
         {
             return NotFound();
         }
+        ViewData["DepartamentoId"] = new SelectList(_context.Departamentos, "Id", "Nombre", empleado.DepartamentoId);
+
         return View(empleado);
     }
 
