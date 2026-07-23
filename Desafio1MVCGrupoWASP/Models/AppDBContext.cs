@@ -19,7 +19,7 @@ namespace Desafio1MVCGrupoWASP.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Aquí configuramos el Data Seeding que piden las indicaciones
+            // Aquí configuramos el Data Seeding
             modelBuilder.Entity<Departamento>().HasData(
                 new Departamento { Id = 1, Nombre = "Recursos Humanos", Descripcion = "Área de RRHH" },
                 new Departamento { Id = 2, Nombre = "Tecnología", Descripcion = "Área de TI" },
