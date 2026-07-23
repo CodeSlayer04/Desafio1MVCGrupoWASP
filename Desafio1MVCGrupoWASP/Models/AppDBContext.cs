@@ -33,7 +33,8 @@ namespace Desafio1MVCGrupoWASP.Models
                     Nombre = "John Doe", 
                     FechaNacimiento = DateOnly.Parse("1985-05-20"), 
                     FechaContratacion = DateOnly.Parse("2010-08-15"), 
-                    Salario = 50000, 
+                    Salario = 50000,
+                    Descripcion = "Encargado de gestión del talento humano.",
                     DepartamentoId = 1
                 },
                 new Empleado 
@@ -42,7 +43,8 @@ namespace Desafio1MVCGrupoWASP.Models
                     Nombre = "Jane Smith", 
                     FechaNacimiento = DateOnly.Parse("1990-03-10"), 
                     FechaContratacion = DateOnly.Parse("2015-01-25"), 
-                    Salario = 70000, 
+                    Salario = 70000,
+                    Descripcion = "Desarrolladora de software.",
                     DepartamentoId = 2 
                 },
                 new Empleado 
@@ -51,7 +53,8 @@ namespace Desafio1MVCGrupoWASP.Models
                     Nombre = "Mark Johnson", 
                     FechaNacimiento = DateOnly.Parse("1982-11-22"), 
                     FechaContratacion = DateOnly.Parse("2012-06-18"), 
-                    Salario = 55000, 
+                    Salario = 55000,
+                    Descripcion = "Ejecutivo de ventas.",
                     DepartamentoId = 3 
                 },
                 new Empleado 
@@ -60,7 +63,8 @@ namespace Desafio1MVCGrupoWASP.Models
                     Nombre = "Emily Davis", 
                     FechaNacimiento = DateOnly.Parse("1978-07-30"), 
                     FechaContratacion = DateOnly.Parse("2005-10-12"), 
-                    Salario = 75000, 
+                    Salario = 75000,
+                    Descripcion = "Gerente de Recursos Humanos.",
                     DepartamentoId = 1 
                 },
                 new Empleado 
@@ -69,7 +73,8 @@ namespace Desafio1MVCGrupoWASP.Models
                     Nombre = "Michael Brown", 
                     FechaNacimiento = DateOnly.Parse("1995-12-05"), 
                     FechaContratacion = DateOnly.Parse("2020-04-15"), 
-                    Salario = 60000, 
+                    Salario = 60000,
+                    Descripcion = "Analista de infraestructura tecnológica.",
                     DepartamentoId = 2 
                 }
             );
