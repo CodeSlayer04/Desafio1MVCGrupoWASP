@@ -2,12 +2,23 @@
 
 @{
     ViewData["Title"] = "Index";
+    var dptoFiltro = ViewData["DepartamentoFiltro"] as string;
 }
 
-<h1>Index</h1>
+<h1>
+    Empleados
+    @if (!string.IsNullOrEmpty(dptoFiltro))
+    {
+        <span class="text-muted fs-4">(Departamento: @dptoFiltro)</span>
+    }
+</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo Empleado</a>
+    @if (!string.IsNullOrEmpty(dptoFiltro))
+    {
+        <a asp-action="Index" class="btn btn-secondary">Mostrar Todos</a>
+    }
 </p>
 <table class="table">
     <thead>
@@ -26,9 +37,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartamentoId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Departamento)
@@ -55,10 +63,7 @@
                 @Html.DisplayFor(model => item.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(model => item.DepartamentoId)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Departamento)
+                @Html.DisplayFor(model => item.Departamento!.Nombre)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

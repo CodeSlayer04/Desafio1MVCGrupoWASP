@@ -3,33 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Desafio1MVCGrupoWASP.Models;
 
-public class EmpleadosController : Controller
+public class DepartamentosController : Controller
 {
     private readonly AppDBContext _context;
 
-    public EmpleadosController(AppDBContext context)
+    public DepartamentosController(AppDBContext context)
     {
         _context = context;
     }
 
-    // GET: EMPLEADOS
-    public async Task<IActionResult> Index(int? departamentoId)    
+    // GET: DEPARTAMENTOS
+    public async Task<IActionResult> Index()    
     {
-        
-        var query = _context.Empleado.Include(e => e.Departamento).AsQueryable();
-
-        if (departamentoId.HasValue)
-        {
-            query = query.Where(e => e.DepartamentoId == departamentoId.Value);
-
-            var dpto = await _context.Departamentos.FindAsync(departamentoId.Value);
-            ViewData["DepartamentoFiltro"] = dpto?.Nombre;
-        }
-
-        return View(await query.ToListAsync());
+        return View(await _context.Departamentos.ToListAsync());
     }
 
-    // GET: EMPLEADOS/Details/5
+    // GET: DEPARTAMENTOS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -37,39 +26,39 @@ public class EmpleadosController : Controller
             return NotFound();
         }
 
-        var empleado = await _context.Empleado
-            .FirstOrDefaultAsync(m => m.ID == id);
-        if (empleado == null)
+        var departamento = await _context.Departamentos
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (departamento == null)
         {
             return NotFound();
         }
 
-        return View(empleado);
+        return View(departamento);
     }
 
-    // GET: EMPLEADOS/Create
+    // GET: DEPARTAMENTOS/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: EMPLEADOS/Create
+    // POST: DEPARTAMENTOS/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("ID,Nombre,FechaNacimiento,FechaContratacion,Salario,Descripcion,DepartamentoId,Departamento")] Empleado empleado)
+    public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Empleados")] Departamento departamento)
     {
         if (ModelState.IsValid)
         {
-            _context.Add(empleado);
+            _context.Add(departamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(empleado);
+        return View(departamento);
     }
 
-    // GET: EMPLEADOS/Edit/5
+    // GET: DEPARTAMENTOS/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -77,22 +66,22 @@ public class EmpleadosController : Controller
             return NotFound();
         }
 
-        var empleado = await _context.Empleado.FindAsync(id);
-        if (empleado == null)
+        var departamento = await _context.Departamentos.FindAsync(id);
+        if (departamento == null)
         {
             return NotFound();
         }
-        return View(empleado);
+        return View(departamento);
     }
 
-    // POST: EMPLEADOS/Edit/5
+    // POST: DEPARTAMENTOS/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("ID,Nombre,FechaNacimiento,FechaContratacion,Salario,Descripcion,DepartamentoId,Departamento")] Empleado empleado)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Nombre,Descripcion,Empleados")] Departamento departamento)
     {
-        if (id != empleado.ID)
+        if (id != departamento.Id)
         {
             return NotFound();
         }
@@ -101,12 +90,12 @@ public class EmpleadosController : Controller
         {
             try
             {
-                _context.Update(empleado);
+                _context.Update(departamento);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmpleadoExists(empleado.ID))
+                if (!DepartamentoExists(departamento.Id))
                 {
                     return NotFound();
                 }
@@ -117,10 +106,10 @@ public class EmpleadosController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(empleado);
+        return View(departamento);
     }
 
-    // GET: EMPLEADOS/Delete/5
+    // GET: DEPARTAMENTOS/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -128,33 +117,33 @@ public class EmpleadosController : Controller
             return NotFound();
         }
 
-        var empleado = await _context.Empleado
-            .FirstOrDefaultAsync(m => m.ID == id);
-        if (empleado == null)
+        var departamento = await _context.Departamentos
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (departamento == null)
         {
             return NotFound();
         }
 
-        return View(empleado);
+        return View(departamento);
     }
 
-    // POST: EMPLEADOS/Delete/5
+    // POST: DEPARTAMENTOS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var empleado = await _context.Empleado.FindAsync(id);
-        if (empleado != null)
+        var departamento = await _context.Departamentos.FindAsync(id);
+        if (departamento != null)
         {
-            _context.Empleado.Remove(empleado);
+            _context.Departamentos.Remove(departamento);
         }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool EmpleadoExists(int? id)
+    private bool DepartamentoExists(int? id)
     {
-        return _context.Empleado.Any(e => e.ID == id);
+        return _context.Departamentos.Any(e => e.Id == id);
     }
 }
