@@ -1,7 +1,17 @@
+using Desafio1MVCGrupoWASP.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Add DBContext
+builder.Services.AddDbContext<AppDBContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DepartamentosCN")));
+
+
+
 
 var app = builder.Build();
 
